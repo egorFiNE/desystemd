@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# FIXME fully merge with https://gist.github.com/egorFiNE/30ee7910ca4b7b9b706d385e432764e0
+
 # Check environment
 if [ "$(id -u)" != "0" ]; then
   echo "This script must be run as root" 1>&2

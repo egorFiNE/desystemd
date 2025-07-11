@@ -23,17 +23,21 @@ function remove_timers() {
   # Those are disabled permanently, so we can remove them
   local SHIT="sysstat-collect.XXX fwupd-refresh.XXX dpkg-db-backup.XXX sysstat-rotate.XXX sysstat-summary.XXX motd-news.XXX apt-daily-upgrade.XXX \
     man-db.XXX apt-daily.XXX update-notifier-download.XXX update-notifier-motd.XXX apport-autoreport.XXX ua-timer.XXX"
-  systemctl mask $(echo $SHIT | sed 's/\.XXX/.timer/g')
-  systemctl stop $(echo $SHIT | sed 's/\.XXX/.timer/g')
-  systemctl mask $(echo $SHIT | sed 's/\.XXX/.service/g')
-  systemctl stop $(echo $SHIT | sed 's/\.XXX/.service/g')
+
+  local timers=$(echo $SHIT | sed 's/\.XXX/.timer/g')
+  local services=$(echo $SHIT | sed 's/\.XXX/.service/g')
+
+  systemctl stop $timers $services
+  systemctl mask $timers $services
 
   # Those we will need to bring back to cron, so this is why it's listed separately
   SHIT="e2scrub_all.XXX logrotate.XXX systemd-tmpfiles-clean.XXX fstrim.XXX"
-  systemctl mask $(echo $SHIT | sed 's/\.XXX/.timer/g')
-  systemctl stop $(echo $SHIT | sed 's/\.XXX/.timer/g')
-  systemctl mask $(echo $SHIT | sed 's/\.XXX/.service/g')
-  systemctl stop $(echo $SHIT | sed 's/\.XXX/.service/g')
+
+  timers=$(echo $SHIT | sed 's/\.XXX/.timer/g')
+  services=$(echo $SHIT | sed 's/\.XXX/.service/g')
+
+  systemctl stop $timers $services
+  systemctl mask $timers $services
 
   # Get rid of "useful" cronjobs, as in: updating motd, updating apt, rebuilding man pages, etc
   rm -v /etc/cron.*/*
@@ -129,8 +133,8 @@ function clean_and_purge_dpkg() {
 function get_rid_of_journald() {
   local SHIT="systemd-journal-catalog-update.service systemd-journal-flush.service systemd-journald-audit.socket systemd-journald-dev-log.socket \
     systemd-journald.service systemd-journald.socket"
-  systemctl mask $SHIT
   systemctl stop $SHIT
+  systemctl mask $SHIT
   rm -rf /var/log/journal
   echo "Disabled systemd-journald"
 }

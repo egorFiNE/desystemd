@@ -1,20 +1,12 @@
 # desystemd
 
-Remove systemd footprint from Ubuntu servers along with a list of useless packages (like `open-iscsi`) and bloatware (like snap).
+Remove `systemd` footprint from Ubuntu servers along with a list of useless packages (like `open-iscsi`) and bloatware (like `snap`).
 
-Only supported OS for now is Ubuntu 25.04 server. This will absolutely destroy a desktop installation.
-
-This script is pretty much WIP.
+Only supported OS for now is Ubuntu 25.04 Server and Server only. The approach used here isn't remotely suitable or even needed for a GUI Linux, because `systemd` and it's elements are a hard requirement on a desktop.
 
 ## How to run
 
-Open it in the browser, read it and copy-paste parts into the terminal, so you have a clear understanding of what this script does to the OS.
-
-Otherwise if YOLO:
-
-```bash
-sudo ./desystemd.sh
-```
+Open it in the editor, read it and copy-paste parts into the terminal, so you have a clear understanding of what this script does to the OS. It will not run until you read the script.
 
 ## Ideas?
 

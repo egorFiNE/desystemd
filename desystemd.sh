@@ -191,7 +191,7 @@ EOF
   systemctl stop $SHIT
 
   # network up
-  ifup $interface
+  ifup -a
 
   # Disable systemd
   systemctl mask $SHIT
